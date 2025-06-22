@@ -4,6 +4,7 @@ import os
 import re
 from openai import OpenAI
 from dotenv import load_dotenv
+import prompts
 
 load_dotenv()
 
@@ -43,19 +44,7 @@ def extract_attachment_text(pdf_path):
 
 def extract_structured_data_with_llm(pdf_text):
     """Uses an LLM to extract structured data from raw text."""
-    prompt = f"""
-    You are an expert data extraction AI. Your task is to analyze the following text from a PDF document and extract all relevant key-value pairs.
-    The document is a government form, so pay attention to labels and the corresponding values filled in.
-    Present the extracted data as a clean JSON object. The keys of the JSON should be descriptive, snake_cased labels for the data, and the values should be the extracted information.
-    Clean up the keys to be descriptive and consistent (e.g., use "company_name" instead of "Name of the company").
-
-    Here is the text from the PDF:
-    ---
-    {pdf_text}
-    ---
-
-    Please return only the JSON object.
-    """
+    prompt = prompts.EXTRACT_STRUCTURED_DATA_PROMPT.format(pdf_text=pdf_text)
     
     try:
         response = client.chat.completions.create(
@@ -82,10 +71,7 @@ def extract_structured_data_with_llm(pdf_text):
 
 def generate_summary(json_data, attachment_summary=None):
     """Generates a summary using OpenAI's GPT model."""
-    prompt = f"""Based on the following data from a company's auditor appointment form (ADT-1),
-generate a 3-5 line summary for a non-technical person.
-Data:
-{json.dumps(json_data, indent=2)}"""
+    prompt = prompts.GENERATE_SUMMARY_PROMPT.format(json_data=json.dumps(json_data, indent=2))
 
     if attachment_summary:
         prompt += f"""
@@ -111,18 +97,7 @@ Incorporate any important details from the attachments, such as board resolution
 
 def summarize_attachments(attachment_text):
     """Uses an LLM to summarize the text of attachments."""
-    prompt = f"""
-    You are an AI assistant. Please summarize the following text extracted from the attachments of a corporate filing.
-    The attachments likely include board resolutions, consent letters from auditors, etc.
-    Focus on key information like dates, names, and the nature of the resolutions or consents.
-
-    Attachment Text:
-    ---
-    {attachment_text}
-    ---
-
-    Provide a concise summary.
-    """
+    prompt = prompts.ATTACHMENT_SUMMARY_PROMPT.format(attachment_text=attachment_text)
     try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
@@ -136,52 +111,70 @@ def summarize_attachments(attachment_text):
         return f"Error generating attachment summary: {e}"
 
 def main():
-    pdf_path = "Form ADT-1-29092023_signed.pdf"
-    
-    # 1. Extract raw text from the main form
-    form_text = extract_text_from_pdf(pdf_path)
-    if not form_text:
+    input_dir = "to_be_extracted"
+    if not os.path.exists(input_dir):
+        os.makedirs(input_dir)
+
+    pdf_files = [f for f in os.listdir(input_dir) if f.endswith(".pdf")]
+
+    if not pdf_files:
+        print(f"No PDF files found in the '{input_dir}' directory.")
         return
 
-    # 2. Use LLM to extract structured data from the form
-    structured_data = extract_structured_data_with_llm(form_text)
-    if not structured_data:
-        print("Could not extract structured data using LLM.")
-        return
+    for pdf_file in pdf_files:
+        pdf_path = os.path.join(input_dir, pdf_file)
+        base_filename = os.path.splitext(pdf_file)[0]
+        
+        print(f"--- Processing {pdf_file} ---")
 
-    # 3. Save JSON to file
-    with open("output.json", "w") as f:
-        json.dump(structured_data, f, indent=4)
-    
-    print("Extracted JSON data:")
-    print(json.dumps(structured_data, indent=4))
-    
-    # 4. Process attachments if available
-    attachment_summary = None
-    attachment_text = extract_attachment_text(pdf_path)
-    if attachment_text:
-        print("\n--- Processing Attachments ---")
-        attachment_summary = summarize_attachments(attachment_text)
-        with open("attachment_summary.txt", "w") as f:
-            f.write(attachment_summary)
-        print("Attachment summary saved to attachment_summary.txt")
-        print(f"\nAttachment Summary:\n{attachment_summary}")
-    
-    # Printing the list of attachments from the JSON
-    attachments = structured_data.get("attachments")
-    if attachments:
-        print("\n--- Attachments Listed in Form ---")
-        for attachment in attachments:
-            print(f"- {attachment}")
-    else:
-        print("\nNo attachments listed in the form.")
+        # 1. Extract raw text from the main form
+        form_text = extract_text_from_pdf(pdf_path)
+        if not form_text:
+            continue
 
-    # 5. Generate AI summary
-    summary = generate_summary(structured_data, attachment_summary)
-    print("\nAI-generated summary:")
-    print(summary)
-    with open("summary.txt", "w") as f:
-            f.write(summary)
+        # 2. Use LLM to extract structured data from the form
+        structured_data = extract_structured_data_with_llm(form_text)
+        if not structured_data:
+            print(f"Could not extract structured data for {pdf_file}.")
+            continue
+
+        # 3. Save JSON to file
+        output_json_path = f"{base_filename}_output.json"
+        with open(output_json_path, "w") as f:
+            json.dump(structured_data, f, indent=4)
+        
+        print(f"Extracted JSON data saved to {output_json_path}")
+        
+        # 4. Process attachments if available
+        attachment_summary = None
+        attachment_text = extract_attachment_text(pdf_path)
+        if attachment_text:
+            print("\n--- Processing Attachments ---")
+            attachment_summary = summarize_attachments(attachment_text)
+            attachment_summary_path = f"{base_filename}_attachment_summary.txt"
+            with open(attachment_summary_path, "w") as f:
+                f.write(attachment_summary)
+            print(f"Attachment summary saved to {attachment_summary_path}")
+            print(f"\nAttachment Summary:\n{attachment_summary}")
+        
+        # Printing the list of attachments from the JSON
+        attachments = structured_data.get("attachments")
+        if attachments:
+            print("\n--- Attachments Listed in Form ---")
+            for attachment in attachments:
+                print(f"- {attachment}")
+        else:
+            print("\nNo attachments listed in the form.")
+
+        # 5. Generate AI summary
+        summary = generate_summary(structured_data, attachment_summary)
+        summary_path = f"{base_filename}_summary.txt"
+        print("\nAI-generated summary:")
+        print(summary)
+        with open(summary_path, "w") as f:
+                f.write(summary)
+        print(f"Summary saved to {summary_path}")
+        print(f"--- Finished processing {pdf_file} ---\n")
 
 if __name__ == "__main__":
     main()

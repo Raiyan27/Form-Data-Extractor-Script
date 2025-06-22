@@ -9,7 +9,7 @@
         "pin_code": "576105"
     },
     "company_email": "mail@alupafoods.in",
-    "falls_under_class_of_companies": "No",
+    "falls_under_class_of_companies": "Yes",
     "joint_auditors_appointed": "No",
     "number_of_auditors_appointed": 1,
     "nature_of_appointment": "Appointment/Re-appointment in AGM",
@@ -71,14 +71,14 @@
         "Copy of resolution passed by the board/company"
     ],
     "director_identification_number": "07579495",
+    "director_name": "Krishna Kumar Rao",
     "director_designation": "Director",
-    "auditor_appointed_due_to_casual_vacancy": "No",
+    "casual_vacancy": "No",
     "casual_vacancy_details": {
         "srn_of_relevant_form": null,
         "membership_number_of_vacated_auditor": null,
         "date_of_vacancy": null,
-        "reason_of_casual_vacancy": null,
+        "reasons_of_casual_vacancy": null,
         "person_vacated_office": null
-    },
-    "declaration": "I am authorized by the Board of Directors of the Company to sign this form and declare that all the requirements of Companies Act, 2013 and the rules made thereunder in respect of the subject matter of this form and matters incidental thereto have been complied with. I also declare that all the information given herein above is true, correct and complete including the attachments to this form and nothing material has been suppressed."
+    }
 }
