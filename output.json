@@ -2,64 +2,83 @@
     "global_location_number": null,
     "corporate_identity_number": "U74999KA2016PTC095981",
     "company_name": "ALUPA FOODS PRIVATE LIMITED",
-    "registered_office_address": "DHANYALAXMI RICE MILL, 5-110A, PUTTUR, UDUPI, Karnataka, 576105",
-    "company_email_id": "mail@alupafoods.in",
-    "company_under_section_139_2": "No",
+    "registered_office_address": {
+        "line_1": "DHANYALAXMI RICE MILL, 5-110A, PUTTUR",
+        "city": "Udupi",
+        "state": "Karnataka",
+        "pin_code": "576105"
+    },
+    "company_email": "mail@alupafoods.in",
+    "falls_under_class_of_companies": "No",
     "joint_auditors_appointed": "No",
-    "number_of_auditors_appointed": "1",
+    "number_of_auditors_appointed": 1,
     "nature_of_appointment": "Appointment/Re-appointment in AGM",
-    "income_tax_permanent_account_number_of_auditor": "AABFM8893Q",
-    "category_of_auditor": "Auditor's Firm",
-    "name_of_auditor_or_firm": "MALLYA & MALLYA",
-    "membership_number_or_registration_number_of_auditor": "001955S",
-    "auditor_address": "29/2, 1st Floor, Parijatha Complex, Race Course Road, Bangalore, Karnataka, IN, 560001",
-    "auditor_email_id": "mallyaandmallya@gmail.com",
-    "period_of_account_appointed_from": "01/04/2022",
-    "period_of_account_appointed_to": "31/03/2027",
-    "number_of_financial_years_appointment_relates_to": "5",
-    "appointment_within_twenty_companies_limit": "Yes",
-    "previous_appointment_tenure": [
-        {
-            "financial_year_start": "24/08/2016",
-            "financial_year_end": "31/03/2017"
-        },
-        {
-            "financial_year_start": "01/04/2017",
-            "financial_year_end": "31/03/2018"
-        },
-        {
-            "financial_year_start": "01/04/2018",
-            "financial_year_end": "31/03/2019"
-        },
-        {
-            "financial_year_start": "01/04/2019",
-            "financial_year_end": "31/03/2020"
-        },
-        {
-            "financial_year_start": "01/04/2020",
-            "financial_year_end": "31/03/2021"
-        },
-        {
-            "financial_year_start": "01/04/2021",
-            "financial_year_end": "31/03/2022"
-        }
-    ],
+    "income_tax_permanent_account_number": "AABFM8893Q",
+    "auditor_category": "Auditor's Firm",
+    "auditor_name": "MALLYA & MALLYA",
+    "membership_number": "001955S",
+    "auditor_address": {
+        "line_1": "29/2, 1st Floor, Parijatha Complex",
+        "line_2": "Race Course Road",
+        "city": "Bangalore",
+        "state": "Karnataka-KA",
+        "country": "IN",
+        "pin_code": "560001"
+    },
+    "auditor_email": "mallyaandmallya@gmail.com",
+    "period_of_account_from": "01/04/2022",
+    "period_of_account_to": "31/03/2027",
+    "number_of_financial_years": 5,
+    "previous_auditor_tenure": {
+        "financial_years": [
+            {
+                "financial_year": "2017",
+                "start_date": "24/08/2016",
+                "end_date": "31/03/2017"
+            },
+            {
+                "financial_year": "2018",
+                "start_date": "01/04/2017",
+                "end_date": "31/03/2018"
+            },
+            {
+                "financial_year": "2019",
+                "start_date": "01/04/2018",
+                "end_date": "31/03/2019"
+            },
+            {
+                "financial_year": "2020",
+                "start_date": "01/04/2019",
+                "end_date": "31/03/2020"
+            },
+            {
+                "financial_year": "2021",
+                "start_date": "01/04/2020",
+                "end_date": "31/03/2021"
+            },
+            {
+                "financial_year": "2022",
+                "start_date": "01/04/2021",
+                "end_date": "31/03/2022"
+            }
+        ]
+    },
     "auditor_appointed_in_agm": "Yes",
     "date_of_appointment": "26/09/2022",
     "attachments": [
-        "Consent signed.pdf",
-        "Resolution for appointment of Auditor Signed",
-        "Intimation Letter Signed.pdf",
-        "Acceptance signed.pdf"
+        "Copy of the intimation sent by company",
+        "Copy of written consent given by auditor",
+        "Copy of resolution passed by the board/company"
     ],
-    "declaration_authorization_resolution_number": null,
-    "declaration_authorization_date": null,
     "director_identification_number": "07579495",
     "director_designation": "Director",
     "auditor_appointed_due_to_casual_vacancy": "No",
-    "srn_of_relevant_form": "007",
-    "membership_number_of_auditor_who_vacated_office": null,
-    "date_of_auditor_vacancy": "29/08/2022",
-    "reason_for_auditor_vacancy": null,
-    "person_who_vacated_office": null
+    "casual_vacancy_details": {
+        "srn_of_relevant_form": null,
+        "membership_number_of_vacated_auditor": null,
+        "date_of_vacancy": null,
+        "reason_of_casual_vacancy": null,
+        "person_vacated_office": null
+    },
+    "declaration": "I am authorized by the Board of Directors of the Company to sign this form and declare that all the requirements of Companies Act, 2013 and the rules made thereunder in respect of the subject matter of this form and matters incidental thereto have been complied with. I also declare that all the information given herein above is true, correct and complete including the attachments to this form and nothing material has been suppressed."
 }
