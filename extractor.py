@@ -5,6 +5,7 @@ import re
 from openai import OpenAI
 from dotenv import load_dotenv
 import prompts
+from config import GPT_MODEL 
 
 load_dotenv()
 
@@ -48,7 +49,7 @@ def extract_structured_data_with_llm(pdf_text):
     
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=GPT_MODEL,
             messages=[
                 {"role": "system", "content": "You are an expert data extraction AI that returns JSON."},
                 {"role": "user", "content": prompt}
@@ -85,7 +86,7 @@ Incorporate any important details from the attachments, such as board resolution
     
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=GPT_MODEL,
             messages=[
                 {"role": "system", "content": "You are a helpful assistant that summarizes corporate filings."},
                 {"role": "user", "content": prompt}
@@ -100,7 +101,7 @@ def summarize_attachments(attachment_text):
     prompt = prompts.ATTACHMENT_SUMMARY_PROMPT.format(attachment_text=attachment_text)
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=GPT_MODEL,
             messages=[
                 {"role": "system", "content": "You are an AI assistant that summarizes legal and corporate documents."},
                 {"role": "user", "content": prompt}
@@ -111,7 +112,7 @@ def summarize_attachments(attachment_text):
         return f"Error generating attachment summary: {e}"
 
 def main():
-    input_dir = "to_be_extracted"
+    input_dir = "files_to_extract"
     if not os.path.exists(input_dir):
         os.makedirs(input_dir)
 

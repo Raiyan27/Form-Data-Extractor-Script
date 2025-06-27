@@ -1,6 +1,6 @@
 # PDF Data Extractor and Summarizer
 
-This project is a Python script (`extractor.py`) that extracts structured data and generates summaries from PDF files placed in a designated folder (to_be_extracted).
+This project is a Python script (`extractor.py`) that extracts structured data and generates summaries from PDF files placed in a designated folder (`files_to_extract`).
 
 ## How to Run
 
@@ -38,7 +38,7 @@ pip install -r requirements.txt
 
 ### 4. Place PDFs in the Input Folder
 
-1.  Create a folder named `to_be_extracted` in the same directory as the script.
+1.  Create a folder named `files_to_extract` in the same directory as the script.
 2.  Place all the PDF files you want to process into this folder.
 
 ### 5. Run the Script
@@ -51,7 +51,7 @@ python extractor.py
 
 ## Output
 
-After the script runs successfully, it will process each PDF in the `to_be_extracted` folder and produce a set of output files for each one, prefixed with the original PDF's filename:
+After the script runs successfully, it will process each PDF in the `files_to_extract` folder and produce a set of output files for each one, prefixed with the original PDF's filename:
 
 - `<pdf_filename>_output.json`: Contains the structured data extracted from the main PDF form.
 - `<pdf_filename>_attachment_summary.txt`: A summary of the content found in the attachment pages of the PDF.

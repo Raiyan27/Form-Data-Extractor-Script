@@ -1,3 +1,6 @@
 venv
 .env
-attachment_summary.txt
+*_attachment_summary.txt
+*_output.json
+*.txt
+files_to_extract/*

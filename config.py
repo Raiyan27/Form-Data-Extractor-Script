@@ -1,0 +1,1 @@
+GPT_MODEL = "gpt-4o-mini" # You can change this to "gpt-4" or another model if needed.
